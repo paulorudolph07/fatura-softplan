@@ -78,5 +78,22 @@ public class GeradorObservacaoServiceTests {
 				+ "5 cujo valor é R$ 0,30. "
 				+ "Total = 1.550,30.", observacao);
 	}
+	
+	@Test
+	public void quandoListaNotaFiscalIsNull_entaoRetornaStringVazia() {
+		String observacao = geradorObservacaoService.gerarObservacao(null);
+		Assert.assertEquals("", observacao);
+	}
+	
+	@Test
+	public void quandoCodigoIsNull_entaoRetornaRelatorioSemSeparador() {
+		NotaFiscal notaFiscal1 = new NotaFiscal();
+		notaFiscal1.setCodigo(null);
+		notaFiscal1.setValor(new BigDecimal("10.00"));
+		
+		String observacao = geradorObservacaoService.gerarObservacao(Arrays.asList(notaFiscal1));
+		System.out.println(observacao);
+		Assert.assertEquals("", observacao);
+	}
 
 }

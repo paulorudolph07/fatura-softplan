@@ -22,6 +22,9 @@ public class GeradorObservacaoService {
 					.filter(n -> n.getCodigo() != null && n.getValor() != null)
 					.map(this::gerarTextoItemNota).collect(Collectors.toList());
 			
+			if(itensNota.size() == 0)
+				return "";
+			
 			if(itensNota.size() >= 2)
 				relatorio.append( String.format(descricaoNota, "s", "s", "fiscais") );
 			else
@@ -42,8 +45,10 @@ public class GeradorObservacaoService {
 						.filter(n -> n.getCodigo() != null && n.getValor() != null)
 						.map(NotaFiscal::getValor).reduce(BigDecimal::add).get() ).replace("R$ ", "")
 			);
+			
+			relatorio.append(".");
 		}
-		return relatorio + ".";
+		return relatorio.toString();
 	}
 	
 	private String gerarTextoItemNota(NotaFiscal notaFiscal) {
